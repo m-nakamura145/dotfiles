@@ -1,0 +1,54 @@
+*.log
+
+
+#===============
+# Mac OS X
+#===============
+.DS_Store
+Thumbs.db
+
+#===============
+# Emacs
+#===============
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+#===============
+# Ruby
+#===============
+*.gem
+*.rbc
+.bundle
+.config
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp
+
+#===============
+# Ruby on Rails
+#===============
+*.rbc
+*.sassc
+.sass-cache
+capybara-*.html
+.rspec
+/.bundle
+/vendor/bundle
+/log/*
+/tmp/*
+/db/*.sqlite3
+/public/system/*
+/coverage/
+/spec/tmp/*

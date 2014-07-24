@@ -2,6 +2,7 @@
 # 環境変数
 #-----------
 export LANG=ja_JP.UTF-8
+export LESSCHARSET=utf-8
 export EDITOR=/usr/local/Cellar/emacs/24.3/bin/emacs
 export PAGER=/usr/bin/less
 export MANPAGER=/usr/bin/less
@@ -146,8 +147,12 @@ alias ll="ls -1"
 # tree
 alias tree="tree -NC" # N: 文字化け対策, C:色をつける
 
+alias be='bundle exec'
+alias gg='git gr'
+
 #-----------
 # その他
 #-----------
 # cdしたあとで、自動的に ls する
 function chpwd() { ls -1 }
+

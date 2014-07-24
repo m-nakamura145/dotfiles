@@ -14,15 +14,17 @@
 	interactive = auto
 [core]
 	editor = emacs
-	excludesfile = /Users/masato/.gitignore_global
+	excludesfile = /Users/chariot1897/.gitignore_global
 	precomposeunicode = true
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /opt/homebrew-cask/Caskroom/sourcetree/1.9.6/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [alias]
 	co = checkout
 [push]
 	default = simple
+[alias]
+	gr = grep -C 3 -i -n --color=auto

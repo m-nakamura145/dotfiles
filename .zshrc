@@ -149,6 +149,7 @@ alias tree="tree -NC" # N: 文字化け対策, C:色をつける
 
 alias be='bundle exec'
 alias gg='git gr'
+alias gs='git status'
 
 #-----------
 # その他

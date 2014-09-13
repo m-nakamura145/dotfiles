@@ -9,6 +9,7 @@ export MANPAGER=/usr/bin/less
 export PATH=/usr/local/Cellar/:$PATH
 export PATH=$HOME/.rbenv/shims:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 #-----------
 # プロンプト
@@ -135,7 +136,8 @@ setopt transient_rprompt
 #-----------
 # エイリアス
 #-----------
-alias emacs="emacs -nw"
+#alias emacs="emacs -nw"
+alias emacs="/usr/local/Cellar/emacs/24.3/bin/emacs"
 alias grep="grep --color -n -I --exclude='*.svn-*' --exclude='entries' --exclude='*/cache/*'"
  
 # ls
@@ -157,3 +159,28 @@ alias gs='git status'
 # cdしたあとで、自動的に ls する
 function chpwd() { ls -1 }
 
+# peco
+function peco-select-history() {
+    typeset tac
+    if which tac > /dev/null; then
+        tac=tac
+    else
+        tac='tail -r'
+    fi
+    BUFFER=$(fc -l -n 1 | eval $tac | peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle redisplay
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+function peco-pkill() {
+    for pid in `ps aux | peco | awk '{ print $2 }'`
+    do
+        kill $pid
+        echo "Killed ${pid}"
+    done
+}
+alias pk="peco-pkill"
+
+alias -g B='`git branch | peco | sed -e "s/^\*[ ]*//g"`'

@@ -184,3 +184,8 @@ function peco-pkill() {
 alias pk="peco-pkill"
 
 alias -g B='`git branch | peco | sed -e "s/^\*[ ]*//g"`'
+
+# hub
+function git(){hub "$@"}
+
+alias see='git browse'

@@ -6,9 +6,13 @@ export LESSCHARSET=utf-8
 export EDITOR=/usr/local/Cellar/emacs/24.3/bin/emacs
 export PAGER=/usr/bin/less
 export MANPAGER=/usr/bin/less
+export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/Cellar/:$PATH
 export PATH=$HOME/.rbenv/shims:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+export GOPATH=$HOME
+export PATH=$PATH:$GOPATH/bin
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 #-----------
@@ -25,19 +29,19 @@ setopt auto_cd
 
 # 入力しているコマンド名が間違っている場合にもしかして：を出す。
 setopt correct
- 
+
 # ビープを鳴らさない
 setopt nobeep
- 
+
 # 変数展開
 setopt prompt_subst
- 
+
 # ^Dでログアウトしない。
 setopt ignoreeof
- 
+
 # バックグラウンドジョブが終了したらすぐに知らせる。
 setopt no_tify
- 
+
 # 直前と同じコマンドをヒストリに追加しない
 setopt hist_ignore_dups
 
@@ -87,7 +91,7 @@ setopt extended_glob
 autoload -Uz is-at-least
 
 # 左プロンプト表示形式変更
-PROMPT='[%F{magenta}%B%n%b%f@%F{green}%U%m%u%f]# '
+PROMPT='[%F{cyan}%B%n%b%f@%F{cyan}%U%m%u%f]# '
 
 #-----------
 # 補完
@@ -99,10 +103,10 @@ autoload -U compinit; compinit -u
 
 # 補完で小文字でも大文字にマッチさせる
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
- 
+
 # ../ の後は今いるディレクトリを補完しない
 zstyle ':completion:*' ignore-parents parent pwd ..
- 
+
 # sudo の後ろでコマンド名を補完する
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
                    /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
@@ -110,7 +114,7 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
 zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 
 #-----------
-# vcs_info 
+# vcs_info
 #-----------
 # VCSの情報を取得するzshの便利関数 vcs_infoを使う
 autoload -Uz vcs_info
@@ -139,19 +143,20 @@ setopt transient_rprompt
 #alias emacs="emacs -nw"
 alias emacs="/usr/local/Cellar/emacs/24.3/bin/emacs"
 alias grep="grep --color -n -I --exclude='*.svn-*' --exclude='entries' --exclude='*/cache/*'"
- 
+
 # ls
 alias ls="ls -G" # color for darwin
 alias l="ls -la"
 alias la="ls -la"
 alias ll="ls -1"
- 
+
 # tree
 alias tree="tree -NC" # N: 文字化け対策, C:色をつける
 
 alias be='bundle exec'
 alias gg='git gr'
 alias gs='git status'
+alias ctags="`brew --prefix`/bin/ctags"
 
 #-----------
 # その他
@@ -173,6 +178,17 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+function peco-src () {
+    local selected_dir=$(ghq list --full-path | peco --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-src
+bindkey '^]' peco-src
 
 function peco-pkill() {
     for pid in `ps aux | peco | awk '{ print $2 }'`
